@@ -1,3 +1,6 @@
+# react-tutorial
+A simple project to help the team learn reactjs
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
