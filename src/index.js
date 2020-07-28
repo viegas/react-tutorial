@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App, { App2 } from './App';
+import App from './components/app/App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App titulo={'Outro titulo'} />
-    <App2 test={'exemplo'} />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
