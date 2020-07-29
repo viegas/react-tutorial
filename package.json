@@ -53,9 +53,6 @@
             "<rootDir>/src/index.js",
             "<rootDir>/src/serviceWorker.js"
         ],
-        "coverageReporters": [
-            "text"
-        ],
         "snapshotSerializers": [
             "enzyme-to-json/serializer"
         ]

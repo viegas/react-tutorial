@@ -5,8 +5,25 @@ exports[`renders correctly 1`] = `
   className="app"
 >
   <Title />
-  <Input />
-  <TaskList />
-  <Footer />
+  <Box>
+    <Input
+      onCreateTodo={[Function]}
+      onSelectAll={[Function]}
+    />
+    <TaskList
+      list={
+        Array [
+          Object {
+            "id": 0,
+            "text": "My first todo",
+          },
+        ]
+      }
+      onRemoveItem={[Function]}
+    />
+    <Footer
+      size={1}
+    />
+  </Box>
 </div>
 `;

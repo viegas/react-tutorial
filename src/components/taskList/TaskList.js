@@ -1,11 +1,24 @@
-import React from 'react'
+import React from 'react';
+import TaskItem from './taskItem/TaskItem';
+import styles from './TaskList.module.css';
 
-const TaskList = () => {
+const TaskList = ({ list, onRemoveItem }) => {
+    if (!list.length) {
+        return null;
+    }
+
     return (
-        <div>
-            TaskList
-        </div>
-    )
-}
+        <ol className={styles.list}>
+            {list.map((item) => (
+                <TaskItem
+                    key={item.id}
+                    id={item.id}
+                    text={item.text}
+                    onRemoveItem={onRemoveItem}
+                />
+            ))}
+        </ol>
+    );
+};
 
-export default TaskList
+export default TaskList;

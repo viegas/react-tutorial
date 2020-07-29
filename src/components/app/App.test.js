@@ -1,4 +1,5 @@
 import App from './App';
+import { mount, render } from 'enzyme'
 
 // import Title from '../title/Title';
 // import Input from '../input/Input';
@@ -19,3 +20,15 @@ it('Should find the intern components', () => {
     expect(wrapper.find('TaskList')).toHaveLength(1);
     expect(wrapper.find('Footer')).toHaveLength(1);
 });
+
+// it('Should call addValue', () => {
+//     const wrapper = shallow(<App init={0} />);
+
+//     wrapper.instance().addValue()
+
+//     console.log(wrapper.state('someState'))
+
+//     expect(wrapper.state('someState')).toEqual(1)
+
+   
+// });

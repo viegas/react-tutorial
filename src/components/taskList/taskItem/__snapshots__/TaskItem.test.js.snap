@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<li
+  className="item"
+>
+  <span
+    className="text"
+  >
+    some text
+  </span>
+  <button
+    className="deleteButton"
+    onClick={[Function]}
+  >
+    ×
+  </button>
+</li>
+`;

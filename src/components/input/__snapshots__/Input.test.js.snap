@@ -1,7 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-<div>
-  Input
+<div
+  className="wrapper"
+>
+  <input
+    onClick={[Function]}
+    type="checkbox"
+  />
+  <input
+    className="input"
+    onKeyPress={[Function]}
+    placeholder="What needs to be done?"
+    type="text"
+  />
 </div>
 `;
