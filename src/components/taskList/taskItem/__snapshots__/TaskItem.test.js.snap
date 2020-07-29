@@ -6,6 +6,7 @@ exports[`renders correctly 1`] = `
 >
   <span
     className="text"
+    onDoubleClick={[Function]}
   >
     some text
   </span>

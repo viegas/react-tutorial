@@ -20,6 +20,7 @@ exports[`renders correctly 1`] = `
         ]
       }
       onRemoveItem={[Function]}
+      onUpdateItem={[Function]}
     />
     <Footer
       size={1}

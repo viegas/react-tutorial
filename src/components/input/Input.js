@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Input.module.css';
 
-const Input = ({ onSelectAll, onCreateTodo }) => {
+const Input = ({ onCreateTodo, onSelectAll }) => {
     const handleKeyPress = ({ key, target }) => {
         if (key === 'Enter' && target.value !== '') {
             onCreateTodo(target.value);
@@ -24,16 +24,13 @@ const Input = ({ onSelectAll, onCreateTodo }) => {
 };
 
 Input.propTypes = {
+    onCreateTodo: PropTypes.func.isRequired,
     onSelectAll: PropTypes.func,
-    onCreateTodo: PropTypes.func,
 };
 
 Input.defaultProps = {
     onSelectAll: () => {
         console.log('onSelectAll');
-    },
-    onCreateTodo: (value) => {
-        console.log('onCreateTodo', value);
     },
 };
 

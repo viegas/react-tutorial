@@ -32,3 +32,14 @@
 .deleteButton:hover {
     color:#cc9a9a;;
 }
+
+
+
+.input {
+    padding: 20px;
+    border: 1px solid gray;
+    background: rgba(0, 0, 0, 0.003);
+    outline: none;
+    flex-grow: 1;
+    color: #4d4d4d;
+}

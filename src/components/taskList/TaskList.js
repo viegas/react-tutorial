@@ -2,7 +2,7 @@ import React from 'react';
 import TaskItem from './taskItem/TaskItem';
 import styles from './TaskList.module.css';
 
-const TaskList = ({ list, onRemoveItem }) => {
+const TaskList = ({ list, onRemoveItem, onUpdateItem }) => {
     if (!list.length) {
         return null;
     }
@@ -15,6 +15,7 @@ const TaskList = ({ list, onRemoveItem }) => {
                     id={item.id}
                     text={item.text}
                     onRemoveItem={onRemoveItem}
+                    onUpdateItem={onUpdateItem}
                 />
             ))}
         </ol>

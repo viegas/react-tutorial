@@ -35,6 +35,15 @@ class App extends Component {
         });
     };
 
+    onUpdateItem = (id, text) => {
+        const { todoList } = this.state;
+        const newList = todoList.map((i) => (i.id === id ? { id, text } : i));
+        
+        this.setState({
+            todoList: newList,
+        });
+    };
+
     render() {
         const { todoList } = this.state;
 
@@ -49,6 +58,7 @@ class App extends Component {
                     <TaskList
                         list={todoList}
                         onRemoveItem={this.onRemoveItem}
+                        onUpdateItem={this.onUpdateItem}
                     />
                     <Footer size={todoList.length} />
                 </Box>
