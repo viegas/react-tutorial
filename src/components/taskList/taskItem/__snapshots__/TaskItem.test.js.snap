@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `
+exports[`Simple tests Should call onRemoveItem correctly 1`] = `
 <li
   className="item"
 >
@@ -8,7 +8,47 @@ exports[`renders correctly 1`] = `
     className="text"
     onDoubleClick={[Function]}
   >
-    some text
+    Some text
+  </span>
+  <button
+    className="deleteButton"
+    onClick={[Function]}
+  >
+    ×
+  </button>
+</li>
+`;
+
+exports[`Simple tests Should renders correctly the input 1`] = `
+<li
+  className="item"
+>
+  <input
+    autoFocus={true}
+    className="input"
+    onChange={[Function]}
+    onKeyPress={[Function]}
+    type="text"
+    value="Some text"
+  />
+  <button
+    className="deleteButton"
+    onClick={[Function]}
+  >
+    ×
+  </button>
+</li>
+`;
+
+exports[`Simple tests renders correctly 1`] = `
+<li
+  className="item"
+>
+  <span
+    className="text"
+    onDoubleClick={[Function]}
+  >
+    Some text
   </span>
   <button
     className="deleteButton"
