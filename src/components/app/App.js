@@ -37,6 +37,7 @@ class App extends Component {
 
     onUpdateItem = (id, text) => {
         const { todoList } = this.state;
+        
         const newList = todoList.map((i) => (i.id === id ? { id, text } : i));
         
         this.setState({

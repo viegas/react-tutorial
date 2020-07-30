@@ -29,8 +29,8 @@ Input.propTypes = {
 };
 
 Input.defaultProps = {
-    onSelectAll: () => {
-        console.log('onSelectAll');
+    onSelectAll: (str) => {
+        return str;
     },
 };
 

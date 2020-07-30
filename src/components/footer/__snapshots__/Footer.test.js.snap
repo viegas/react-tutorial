@@ -1,3 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `""`;
+exports[`renders correctly when empty 1`] = `""`;
+
+exports[`renders correctly with size 1`] = `
+<div
+  className="wrapper"
+>
+  <span>
+    Items left: 1
+  </span>
+</div>
+`;

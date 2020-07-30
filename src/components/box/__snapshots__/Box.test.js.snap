@@ -3,7 +3,15 @@
 exports[`renders correctly 1`] = `
 <div
   className="wrapper"
+/>
+`;
+
+exports[`renders correctly with children 1`] = `
+<div
+  className="wrapper"
 >
-  Some children
+  <p>
+    Some children
+  </p>
 </div>
 `;

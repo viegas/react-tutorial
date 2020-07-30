@@ -8,18 +8,53 @@ it('renders correctly', () => {
     expect(wrapper).toMatchSnapshot();
 });
 
-// it('Component should handle onChange function', () => {
-//     const wrapper = shallow(<Input />);
+it('Should call keyPress function', () => {
+    // const onSelectAll = jest.fn()
+    const onCreateTodo = jest.fn();
 
-//     const evt = {
-//         target: {
-//             value: 'Some Value',
-//         },
-//     };
+    const wrapper = shallow(<Input onCreateTodo={onCreateTodo} />);
 
-//     wrapper.find('input').simulate('change', evt);
+    let input = wrapper.find('input[type="text"]');
 
-//     expect(wrapper.find('input').prop('value')).toEqual('Some Value')
-//     expect(wrapper).toMatchSnapshot();
+    input.simulate('keypress', {
+        key: 'Enter',
+        target: {
+            value: 'test',
+        },
+    });
 
-// });
+    expect(onCreateTodo).toBeCalledWith('test');
+});
+
+it('Should call keyPress function on else statement', () => {
+    // const onSelectAll = jest.fn()
+    const onCreateTodo = jest.fn();
+
+    const wrapper = shallow(<Input onCreateTodo={onCreateTodo} />);
+
+    let input = wrapper.find('input[type="text"]');
+
+    input.simulate('keypress', {
+        key: '13',
+        target: {
+            value: 'test',
+        },
+    });
+
+    expect(onCreateTodo).not.toBeCalled();
+});
+
+it('Should call onSelectAll function when click the checkbox', () => {
+    const onCreateTodo = jest.fn();
+    const spy = jest.spyOn(Input.defaultProps, 'onSelectAll');
+
+    const wrapper = shallow(<Input onCreateTodo={onCreateTodo} />);
+    wrapper.find('input[type="checkbox"]').simulate('click', 'test');
+    
+
+    expect(spy).toBeCalledWith('test');
+
+    // const result = Input.defaultProps.onSelectAll('123')
+    // expect(result).toBe('123')
+});
+

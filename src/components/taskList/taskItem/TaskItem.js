@@ -30,7 +30,7 @@ const TaskItem = ({ text, id, onRemoveItem, onUpdateItem }) => {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, []);
+    });
 
     return (
         <li className={styles.item}>
