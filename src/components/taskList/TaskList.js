@@ -13,6 +13,7 @@ const TaskList = ({ list, onRemoveItem, onUpdateItem }) => {
                 <TaskItem
                     key={item.id}
                     id={item.id}
+                    disabled={item.disabled}
                     text={item.text}
                     onRemoveItem={onRemoveItem}
                     onUpdateItem={onUpdateItem}

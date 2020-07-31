@@ -1,23 +1,19 @@
 {
   "todos": [
     {
-      "id": 0,
-      "text": "My first todo"
-    },
-    {
-      "text": "Data",
+      "text": "1",
       "id": 1
     },
     {
-      "text": "Viegas",
+      "text": "2",
       "id": 2
     },
     {
-      "text": "Viegasss",
+      "text": "3",
       "id": 3
     },
     {
-      "text": "12312312",
+      "text": "4",
       "id": 4
     }
   ]

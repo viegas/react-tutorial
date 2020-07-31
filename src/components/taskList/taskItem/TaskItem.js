@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from './TaskItem.module.css';
 
-const TaskItem = ({ text, id, onRemoveItem, onUpdateItem }) => {
+const TaskItem = ({ text, id, disabled, onRemoveItem, onUpdateItem }) => {
     const [editing, setEditing] = useState(false);
     const [newValue, setNewValue] = useState(text);
 
@@ -53,6 +53,7 @@ const TaskItem = ({ text, id, onRemoveItem, onUpdateItem }) => {
                 </span>
             )}
             <button
+                disabled={disabled}
                 onClick={() => onRemoveItem(id)}
                 className={styles.deleteButton}
             >
@@ -65,6 +66,11 @@ const TaskItem = ({ text, id, onRemoveItem, onUpdateItem }) => {
 TaskItem.propTypes = {
     text: PropTypes.string.isRequired,
     onRemoveItem: PropTypes.func.isRequired,
+    disabled: PropTypes.bool,
 };
+
+TaskItem.defaultProps = {
+    disabled: false,
+}
 
 export default TaskItem;

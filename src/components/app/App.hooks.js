@@ -3,11 +3,19 @@ import api from '../../api';
 
 export default (todoList, setTodoList) => {
     const useCreateTodo = async (text) => {
-        // const newObject = { text, id: Date.now() };
+        
+        api.post('todos', {
+            text,
+        });
+        
+        setTodoList(todoList.concat({
+            text,
+            id: Date.now(),
+            disabled: true
+        }));
 
-        const { data } = await api.get('todos');
-
-        setTodoList(data);
+        const get = await api.get('todos');
+        setTodoList(get.data);
     };
 
     const useUpdateTodo = (id, text) => {
