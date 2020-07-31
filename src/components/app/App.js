@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import styles from './App.module.css';
 
 import Title from '../title/Title';
@@ -7,65 +7,32 @@ import TaskList from '../taskList/TaskList';
 import Footer from '../footer/Footer';
 import Box from '../box/Box';
 
-class App extends Component {
-    state = {
-        todoList: [
-            {
-                id: 0,
-                text: 'My first todo',
-            },
-        ],
-    };
+import useTodoHooks from './App.hooks';
 
-    onCreateTodo = (newTodo) => {
-        const { todoList } = this.state;
+const initValue = [{ id: 0, text: 'My first todo' }];
 
-        this.setState({
-            todoList: todoList.concat({ id: Date.now(), text: newTodo }),
-        });
-    };
+const App = () => {
+    const [todoList, setTodoList] = useState(initValue);
 
-    onRemoveItem = (id) => {
-        const { todoList } = this.state;
+    const { useCreateTodo, useUpdateTodo, useRemoveTodo } = useTodoHooks(
+        todoList,
+        setTodoList
+    );
 
-        const newList = todoList.filter((i) => i.id !== id);
-
-        this.setState({
-            todoList: newList,
-        });
-    };
-
-    onUpdateItem = (id, text) => {
-        const { todoList } = this.state;
-        
-        const newList = todoList.map((i) => (i.id === id ? { id, text } : i));
-        
-        this.setState({
-            todoList: newList,
-        });
-    };
-
-    render() {
-        const { todoList } = this.state;
-
-        return (
-            <div className={styles.app}>
-                <Title />
-                <Box>
-                    <Input
-                        onSelectAll={this.onSelectAll}
-                        onCreateTodo={this.onCreateTodo}
-                    />
-                    <TaskList
-                        list={todoList}
-                        onRemoveItem={this.onRemoveItem}
-                        onUpdateItem={this.onUpdateItem}
-                    />
-                    <Footer size={todoList.length} />
-                </Box>
-            </div>
-        );
-    }
-}
+    return (
+        <div className={styles.app}>
+            <Title />
+            <Box>
+                <Input onCreateTodo={useCreateTodo} />
+                <TaskList
+                    list={todoList}
+                    onRemoveItem={useRemoveTodo}
+                    onUpdateItem={useUpdateTodo}
+                />
+                <Footer size={todoList.length} />
+            </Box>
+        </div>
+    );
+};
 
 export default App;

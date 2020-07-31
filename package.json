@@ -19,7 +19,8 @@
         "test": "react-scripts test --coverage --watchAll",
         "eject": "react-scripts eject",
         "storybook": "start-storybook -p 9009 -s public",
-        "build-storybook": "build-storybook -s public"
+        "build-storybook": "build-storybook -s public",
+        "backend": "json-server db.mock.json"
     },
     "eslintConfig": {
         "extends": "react-app",
@@ -81,6 +82,8 @@
         "@storybook/preset-create-react-app": "^3.1.4",
         "@storybook/react": "^5.3.19",
         "enzyme-to-json": "^3.5.0",
-        "jest-react-hooks-shallow": "^1.4.1"
+        "jest-react-hooks-shallow": "^1.4.1",
+        "json-server": "^0.16.1",
+        "nock": "^13.0.3"
     }
 }

@@ -1,0 +1,12 @@
+{
+    "todos": [
+        {
+            "id": 0,
+            "text": "My first todo"
+        },
+        {
+            "id": 1,
+            "text": "My other todo"
+        }
+    ]
+}
