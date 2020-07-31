@@ -21,7 +21,6 @@ describe('Simple tests', () => {
     });
 
     it('renders correctly', () => {
-        console.log(wrapper.instance());
         expect(wrapper).toMatchSnapshot();
     });
 

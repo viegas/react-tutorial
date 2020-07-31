@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './App.module.css';
 
 import Title from '../title/Title';
@@ -8,12 +8,24 @@ import Footer from '../footer/Footer';
 import Box from '../box/Box';
 
 import useTodoHooks from './App.hooks';
-
-const initValue = [{ id: 0, text: 'My first todo' }];
+import api from '../../api';
 
 const App = () => {
-    const [todoList, setTodoList] = useState(initValue);
+    const [todoList, setTodoList] = useState([]);
+    const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        const fetchFn = async () => {
+            setLoading(true);
+            const { data } = await api.get('todos');
+            setTodoList(data);
+            setLoading(false);
+        };
+
+        fetchFn();
+    }, []);
+    
+    
     const { useCreateTodo, useUpdateTodo, useRemoveTodo } = useTodoHooks(
         todoList,
         setTodoList
@@ -24,11 +36,16 @@ const App = () => {
             <Title />
             <Box>
                 <Input onCreateTodo={useCreateTodo} />
-                <TaskList
-                    list={todoList}
-                    onRemoveItem={useRemoveTodo}
-                    onUpdateItem={useUpdateTodo}
-                />
+                {loading ? (
+                    <span>LOADING....</span>
+                ) : (
+                    <TaskList
+                        list={todoList}
+                        onRemoveItem={useRemoveTodo}
+                        onUpdateItem={useUpdateTodo}
+                    />
+                )}
+
                 <Footer size={todoList.length} />
             </Box>
         </div>

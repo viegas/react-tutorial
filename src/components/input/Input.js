@@ -1,11 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Input.module.css';
+import api from '../../api';
+
+const CustomHook = (callback) => {
+    const [isSaving, setSaving] = useState(false);
+
+    const sendPost = async (text) => {
+        setSaving(true)
+        await api.post('todos', { text });
+        callback();
+        setSaving(false)
+    };
+
+    return [isSaving, sendPost];
+};
 
 const Input = ({ onCreateTodo, onSelectAll }) => {
-    const handleKeyPress = ({ key, target }) => {
+
+    const [ isSaving, sendPost ] = CustomHook(onCreateTodo)
+
+    const handleKeyPress = async ({ key, target }) => {
         if (key === 'Enter' && target.value !== '') {
-            onCreateTodo(target.value);
+            await sendPost(target.value);
             target.value = '';
         }
     };
@@ -14,6 +31,7 @@ const Input = ({ onCreateTodo, onSelectAll }) => {
         <div className={styles.wrapper}>
             <input type="checkbox" onClick={onSelectAll} />
             <input
+                disabled={isSaving}
                 type="text"
                 className={styles.input}
                 placeholder={'What needs to be done?'}
