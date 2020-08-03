@@ -5,12 +5,14 @@ exports[`renders correctly 1`] = `
   className="list"
 >
   <TaskItem
+    disabled={false}
     id={1}
     key="1"
     onRemoveItem={[Function]}
     text="Some text"
   />
   <TaskItem
+    disabled={false}
     id={2}
     key="2"
     onRemoveItem={[Function]}

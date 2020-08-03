@@ -1,9 +1,32 @@
 import App from './App';
+import nock from 'nock';
 
 import useTodoHooks from './App.hooks';
+import { mount } from 'enzyme';
+import { act } from 'react-test-renderer';
 
-it('renders correctly', () => {
+it('renders correctly on loading data', () => {
     const wrapper = shallow(<App />);
+    expect(wrapper).toMatchSnapshot();
+});
+
+it('renders correctly with data', () => {
+    // nock('http://localhost:8978/')
+    //     .get('/todos')
+    //     .reply(200, {
+    //         data: [
+    //             {
+    //                 text: 'some todo',
+    //                 id: 1,
+    //             },
+    //         ],
+    //     });
+
+    const wrapper = mount(<App />);
+    act(() => {
+        wrapper.update();
+    });
+
     expect(wrapper).toMatchSnapshot();
 });
 
@@ -22,18 +45,26 @@ describe('App hooks test', () => {
         setValue = jest.fn();
     });
 
-    it('Should call useCreateTodo correctly', () => {
-        const { useCreateTodo } = useTodoHooks([], setValue);
-        useCreateTodo('new todo text');
+    it.only('Should call useCreateTodo correctly', async () => {
+        const todoText = 'new todo text';
 
-        expect(setValue).toBeCalledWith(
-            expect.arrayContaining([
+        nock('http://localhost:8978')
+            .get('/todos')
+            .reply(200, [
                 {
-                    text: 'new todo text',
-                    id: expect.any(Number),
+                    text: 'some todo',
+                    id: 1,
                 },
-            ])
-        );
+            ]);
+
+        nock('http://localhost:8978').post('/todos').reply(200);
+
+        const { useCreateTodo } = useTodoHooks([], setValue);
+        await useCreateTodo(todoText);
+
+        expect(setValue).toHaveBeenCalledTimes(2);
+
+        expect(setValue).toHaveNthReturnedWith(2, {});
     });
 
     it('Should call useUpdateTodo correctly', () => {
@@ -44,7 +75,7 @@ describe('App hooks test', () => {
             ],
             setValue
         );
-        
+
         useUpdateTodo(0, 'Updated');
         expect(setValue).toBeCalledWith([
             { id: 0, text: 'Updated' },

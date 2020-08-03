@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `
+exports[`renders correctly on loading data 1`] = `
 <div
   className="app"
 >
@@ -10,21 +10,59 @@ exports[`renders correctly 1`] = `
       onCreateTodo={[Function]}
       onSelectAll={[Function]}
     />
-    <TaskList
-      list={
-        Array [
-          Object {
-            "id": 0,
-            "text": "My first todo",
-          },
-        ]
-      }
-      onRemoveItem={[Function]}
-      onUpdateItem={[Function]}
-    />
+    <span>
+      LOADING....
+    </span>
     <Footer
-      size={1}
+      size={0}
     />
   </Box>
 </div>
+`;
+
+exports[`renders correctly with data 1`] = `
+<App>
+  <div
+    className="app"
+  >
+    <Title>
+      <h1
+        className="header"
+      >
+        Todo App
+      </h1>
+    </Title>
+    <Box>
+      <div
+        className="wrapper"
+      >
+        <Input
+          onCreateTodo={[Function]}
+          onSelectAll={[Function]}
+        >
+          <div
+            className="wrapper"
+          >
+            <input
+              onClick={[Function]}
+              type="checkbox"
+            />
+            <input
+              className="input"
+              onKeyPress={[Function]}
+              placeholder="What needs to be done?"
+              type="text"
+            />
+          </div>
+        </Input>
+        <span>
+          LOADING....
+        </span>
+        <Footer
+          size={0}
+        />
+      </div>
+    </Box>
+  </div>
+</App>
 `;
