@@ -1,7 +1,7 @@
 import App from './App';
 import nock from 'nock';
 
-import useTodoHooks from './App.hooks';
+import useTodoHooks, { mockFunction } from './App.hooks';
 import { shallow } from 'enzyme';
 import { wait } from '@testing-library/react';
 
@@ -109,11 +109,19 @@ describe('App hooks test', () => {
                 },
             ]);
 
-        const { useCreateTodo } = useTodoHooks([], setValue);
+        const handleError = jest.fn();
+
+        const { useCreateTodo } = useTodoHooks([], setValue, handleError);
+
         useCreateTodo('todoText');
         await useCreateTodo('todoText2');
 
-        expect(setValue).toHaveBeenCalledTimes(2);
+        expect(setValue).toHaveBeenCalledTimes(3);
+        expect(handleError).toHaveBeenCalledTimes(1);
+    });
+
+    it('Test the mock function', async () => {
+        expect(mockFunction('some value')).toBe('some value');
     });
 
     it('Should call useUpdateTodo correctly', () => {

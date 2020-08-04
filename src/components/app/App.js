@@ -24,8 +24,7 @@ const App = () => {
 
         fetchFn();
     }, []);
-    
-    
+
     const { useCreateTodo, useUpdateTodo, useRemoveTodo } = useTodoHooks(
         todoList,
         setTodoList

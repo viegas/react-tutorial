@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
-import api from '../../api';
 import axios from 'axios';
+import api from '../../api';
 
 let cancelToken;
 
-export default (todoList, setTodoList) => {
+export const mockFunction = (str) => str
+
+export default (todoList, setTodoList, handleError = mockFunction) => {
     const useCreateTodo = async (text) => {
         if (typeof cancelToken != typeof undefined) {
             cancelToken.cancel('Operation canceled due to new request.');
@@ -22,8 +23,15 @@ export default (todoList, setTodoList) => {
             })
         );
 
-        const get = await api.get('todos', { cancelToken: cancelToken.token });
-        setTodoList(get.data);
+        const get = await api
+            .get('todos', {
+                cancelToken: cancelToken.token,
+            })
+            .catch((e) => handleError(e));
+
+        if (get && get.data) {
+            setTodoList(get.data);
+        }
     };
 
     const useUpdateTodo = async (id, text) => {
