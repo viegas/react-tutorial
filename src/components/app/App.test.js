@@ -2,40 +2,49 @@ import App from './App';
 import nock from 'nock';
 
 import useTodoHooks from './App.hooks';
-import { mount } from 'enzyme';
-import { act } from 'react-test-renderer';
+import { shallow } from 'enzyme';
+import { wait } from '@testing-library/react';
 
-it('renders correctly on loading data', () => {
-    const wrapper = shallow(<App />);
-    expect(wrapper).toMatchSnapshot();
-});
-
-it('renders correctly with data', () => {
-    // nock('http://localhost:8978/')
-    //     .get('/todos')
-    //     .reply(200, {
-    //         data: [
-    //             {
-    //                 text: 'some todo',
-    //                 id: 1,
-    //             },
-    //         ],
-    //     });
-
-    const wrapper = mount(<App />);
-    act(() => {
-        wrapper.update();
+describe('App render tests', () => {
+    it('renders correctly on loading data', () => {
+        nock('http://localhost:8978')
+            .get('/todos')
+            .reply(200, [
+                {
+                    text: 'todoText',
+                    id: 1,
+                },
+            ]);
+        const wrapper = shallow(<App />);
+        expect(wrapper).toMatchSnapshot();
     });
 
-    expect(wrapper).toMatchSnapshot();
-});
+    it('Should find the intern components', async () => {
+        nock('http://localhost:8978')
+            .get('/todos')
+            .reply(200, [
+                {
+                    text: 'todoText',
+                    id: 1,
+                },
+                {
+                    text: 'todoText',
+                    id: 1,
+                },
+            ]);
 
-it('Should find the intern components', () => {
-    const wrapper = shallow(<App />);
-    expect(wrapper.find('Title')).toHaveLength(1);
-    expect(wrapper.find('Input')).toHaveLength(1);
-    expect(wrapper.find('TaskList')).toHaveLength(1);
-    expect(wrapper.find('Footer')).toHaveLength(1);
+        // const wrapper = shallow(<App />);
+        let wrapper;
+        wrapper = shallow(<App />);
+
+        await wait(() => {
+            expect(wrapper.find('Title')).toHaveLength(1);
+            expect(wrapper.find('Input')).toHaveLength(1);
+            expect(wrapper.find('TaskList')).toHaveLength(1);
+            expect(wrapper.find('Footer')).toHaveLength(1);
+            expect(wrapper).toMatchSnapshot();
+        });
+    });
 });
 
 describe('App hooks test', () => {
@@ -45,29 +54,71 @@ describe('App hooks test', () => {
         setValue = jest.fn();
     });
 
-    it.only('Should call useCreateTodo correctly', async () => {
+    it('Should call useCreateTodo correctly', async () => {
         const todoText = 'new todo text';
 
         nock('http://localhost:8978')
+            .post('/todos')
+            .reply(200)
             .get('/todos')
             .reply(200, [
                 {
-                    text: 'some todo',
+                    text: todoText,
                     id: 1,
                 },
             ]);
-
-        nock('http://localhost:8978').post('/todos').reply(200);
 
         const { useCreateTodo } = useTodoHooks([], setValue);
         await useCreateTodo(todoText);
 
         expect(setValue).toHaveBeenCalledTimes(2);
 
-        expect(setValue).toHaveNthReturnedWith(2, {});
+        expect(setValue).toHaveBeenNthCalledWith(
+            1,
+            expect.arrayContaining([
+                {
+                    text: todoText,
+                    id: expect.any(Number),
+                    disabled: true,
+                },
+            ])
+        );
+
+        expect(setValue).toHaveBeenNthCalledWith(
+            2,
+            expect.arrayContaining([
+                {
+                    text: todoText,
+                    id: expect.any(Number),
+                },
+            ])
+        );
+    });
+
+    it('Should handle cancel token correctly', async () => {
+        nock('http://localhost:8978')
+            .persist()
+            .post('/todos')
+            .reply(200)
+            .get('/todos')
+            .delayConnection(1000)
+            .reply(200, [
+                {
+                    text: 'todoText',
+                    id: 1,
+                },
+            ]);
+
+        const { useCreateTodo } = useTodoHooks([], setValue);
+        useCreateTodo('todoText');
+        await useCreateTodo('todoText2');
+
+        expect(setValue).toHaveBeenCalledTimes(2);
     });
 
     it('Should call useUpdateTodo correctly', () => {
+        nock('http://localhost:8978').patch('/todos/0').reply(200);
+
         const { useUpdateTodo } = useTodoHooks(
             [
                 { id: 0, text: 'todo' },
@@ -84,6 +135,8 @@ describe('App hooks test', () => {
     });
 
     it('Should call useRemoveTodo correctly', () => {
+        nock('http://localhost:8978').delete('/todos/0').reply(200, {});
+
         const { useRemoveTodo } = useTodoHooks(
             [{ id: 0, text: 'todo' }],
             setValue
